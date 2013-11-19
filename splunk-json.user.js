@@ -6,12 +6,14 @@
  *  list and formats them with syntax highlighting.          *
  *************************************************************/
 
+// Users!  Add your @match lines below so this script will run only at the URLs
+// where your splunk instance is located.
 
 // ==UserScript==
 // @name    Splunk JSON Formatter
 // @version 0.1
-// @match   http://splunk.corp.redhat.com/*
-// @match   https://splunk.corp.redhat.com/*
+// @match   http://____com/*
+// @match   https://____.com/*
 // ==/UserScript==
 (function () {
 
