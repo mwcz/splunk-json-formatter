@@ -70,6 +70,7 @@
 
             // write the content to the new window
             var content = '<pre>' + syntaxHighlight(json_obj) + '</pre>';
+            content = content.replace( /"(https?:\/\/[^"]+)"/gi , '"<a target="_blank" href="$1">$1</a>"' );
             win.document.write(content);
 
             // write the css to the new window
