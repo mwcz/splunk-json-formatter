@@ -49,6 +49,7 @@
             json = json.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
             return json.replace(/("(\\u[a-zA-Z0-9]{4}|\\[^u]|[^\\"])*"(\s*:)?|\b(true|false|null)\b|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?)/g, function (match) {
                 var cls = 'number';
+                var retval;
                 if (/^"/.test(match)) {
                     if (/:$/.test(match)) {
                         cls = 'key';
@@ -60,7 +61,12 @@
                 } else if (/null/.test(match)) {
                     cls = 'null';
                 }
-                return '<span class="' + cls + '">' + match + '</span>';
+                if (cls === 'key') {
+                    retval = '<span class="' + cls + '">' + match.slice(0, match.length - 1) + '</span>:';
+                } else {
+                    retval = '<span class="' + cls + '">' + match + '</span>';
+                }
+                return retval;
             });
         }
 
