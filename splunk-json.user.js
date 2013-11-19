@@ -18,8 +18,21 @@
     function main() {
 
         var css = [
-            "pre { padding: 5px; margin: 5px; background-color: #1f1f1f; overflow-x: scroll}",
-            "body { background-color: #3f3f3f; color: #d7d7d7; }",
+            "pre {",
+            "   padding: 17px;",
+            "   margin: 5px;",
+            "   background-color: #1f1f1f;",
+            "   overflow-x: auto;",
+            "   border-radius: 8px;",
+            "   box-shadow: inset 2px 4px 14px 4px rgba(0,0,0,0.5);",
+            "}",
+            "body {",
+            "   padding: 8px;",
+            "   margin: 0;",
+            "   background-color: #365b7e;",
+            "   color: #d7d7d7;",
+            "}",
+            "a { color: #d75757; }",
             ".string { color: #cc9393; }",
             ".number { color: #8cd0d3; }",
             ".boolean { color: #f0dfaf; }",
