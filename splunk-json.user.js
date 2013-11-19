@@ -2,8 +2,8 @@
 /*jslint browser: true*/
 
 /*************************************************************
- *  This script looks for a JSON array in splunk records     *
- *  and formats them with syntax highlighting.               *
+ *  This script looks for a JSON object in splunk events     *
+ *  list and formats them with syntax highlighting.          *
  *************************************************************/
 
 
