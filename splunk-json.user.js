@@ -70,8 +70,25 @@
             });
         }
 
-        jQ('body').on('click', '.event', function () {
-            var string = jQ(this).text();
+        function handle_mouse_move (event) {
+            var el = jQ(event.target);
+            var format_button = jQ('<button>');
+            if (el.parent('.event').find('button').length === 0) {
+                format_button.text('Format JSON');
+                format_button.css('position', 'absolute');
+                format_button.css('top',0);
+                format_button.css('left',0);
+                el.parent('.event').css('position', 'relative');
+                format_button.on('click', handle_json_button_click);
+                el.parent('.event').prepend(format_button);
+                el.parent('.event').on('mouseleave', function() {
+                    format_button.remove();
+                });
+            }
+        }
+
+        function handle_json_button_click (event) {
+            var string = jQ(event.target).parent('.event').text();
             var json_string = string.slice(string.indexOf('{'));
             var json_obj = JSON.parse(json_string);
             var win = window.open();
@@ -86,7 +103,10 @@
             style.type = "text/css";
             style.innerText = css;
             win.document.body.appendChild(style);
-        });
+        }
+
+        jQ('body').on('mousemove', '.event', handle_mouse_move);
+
     }
 
     // ==UserScript==
