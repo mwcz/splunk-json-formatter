@@ -70,25 +70,23 @@
             });
         }
 
-        function handle_mouse_move (event) {
-            var el = jQ(event.target),
-				container,
-				format_button = jQ('<button>');
+        function draw_buttons (event) {
+            var items = jQ('ol.EventsViewerSoftWrap .chunk .item');
 
-            if (el.parent('.event').find('button').length === 0) {
-                format_button.text('Format JSON');
+			items.each(function (index, el_tmp) {
+				var el = jQ(el_tmp).find('td.col4').first(),
+					container,
+					format_button = jQ('<button>');
+				format_button.text('Format JSON');
 				format_button.addClass('json-splunk splIconicButton splButton-tertiary');
 				format_button.css('margin-top', '2px');
 				format_button.css('white-space', 'nowrap');
 				format_button.css('position', 'relative');
 				format_button.css('left', '-35px');
-                format_button.on('click', handle_json_button_click);
+				format_button.on('click', handle_json_button_click);
 				container = el.parentsUntil('li').last().find('td.col3');
-				if (!container.children().last().hasClass('json-splunk')) {
-					container.append('<br>');
-					container.append(format_button);
-				}
-            }
+				container.append(format_button);
+			});
         }
 
         function handle_json_button_click (event) {
@@ -109,8 +107,9 @@
             win.document.body.appendChild(style);
         }
 
-        jQ('body').on('mousemove', '.event', handle_mouse_move);
-
+		window.Splunk.Module.EventsViewer.prototype.onResultsRendered = function () {
+			draw_buttons();
+		};
     }
 
     // ==UserScript==
