@@ -12,7 +12,7 @@
 // ==UserScript==
 // @name    Splunk JSON Formatter
 // @version 0.1
-// @match   http://____com/*
+// @match   http://____.com/*
 // @match   https://____.com/*
 // ==/UserScript==
 (function () {
@@ -70,25 +70,27 @@
             });
         }
 
-        function handle_mouse_move (event) {
-            var el = jQ(event.target);
-            var format_button = jQ('<button>');
-            if (el.parent('.event').find('button').length === 0) {
-                format_button.text('Format JSON');
-                format_button.css('position', 'absolute');
-                format_button.css('top',0);
-                format_button.css('left',0);
-                el.parent('.event').css('position', 'relative');
-                format_button.on('click', handle_json_button_click);
-                el.parent('.event').prepend(format_button);
-                el.parent('.event').on('mouseleave', function() {
-                    format_button.remove();
-                });
-            }
+        function draw_buttons (event) {
+            var items = jQ('ol.EventsViewerSoftWrap .chunk .item');
+
+			items.each(function (index, el_tmp) {
+				var el = jQ(el_tmp).find('td.col4').first(),
+					container,
+					format_button = jQ('<button>');
+				format_button.text('Format JSON');
+				format_button.addClass('json-splunk splIconicButton splButton-tertiary');
+				format_button.css('margin-top', '2px');
+				format_button.css('white-space', 'nowrap');
+				format_button.css('position', 'relative');
+				format_button.css('left', '-35px');
+				format_button.on('click', handle_json_button_click);
+				container = el.parentsUntil('li').last().find('td.col3');
+				container.append(format_button);
+			});
         }
 
         function handle_json_button_click (event) {
-            var string = jQ(event.target).parent('.event').text();
+            var string = jQ(event.target).parentsUntil('tbody').last().find('pre.event').text();
             var json_string = string.slice(string.indexOf('{'));
             var json_obj = JSON.parse(json_string);
             var win = window.open();
@@ -105,8 +107,9 @@
             win.document.body.appendChild(style);
         }
 
-        jQ('body').on('mousemove', '.event', handle_mouse_move);
-
+		window.Splunk.Module.EventsViewer.prototype.onResultsRendered = function () {
+			draw_buttons();
+		};
     }
 
     // ==UserScript==
