@@ -81,6 +81,7 @@
 				format_button.addClass('json-splunk splIconicButton splButton-tertiary');
 				format_button.css('margin-top', '2px');
 				format_button.css('white-space', 'nowrap');
+				format_button.css('float', 'left');
 				format_button.css('position', 'relative');
 				format_button.css('left', '-35px');
 				format_button.on('click', handle_json_button_click);
