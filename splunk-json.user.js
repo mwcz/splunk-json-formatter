@@ -31,7 +31,7 @@
             "body {",
             "   padding: 8px;",
             "   margin: 0;",
-            "   background-color: #365b7e;",
+            "   background-color: #3F3F3F;",
             "   color: #d7d7d7;",
             "}",
             "a { color: #d75757; }",
