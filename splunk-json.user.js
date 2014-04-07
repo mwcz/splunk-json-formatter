@@ -111,7 +111,6 @@
             style.setAttribute('rel', 'stylesheet');
             style.textContent = css;
             win.document.head.appendChild(style);
-            console.log(win.document.head);
         }
 
         // Try to draw the buttons every 400ms.  Previously, this was done by
