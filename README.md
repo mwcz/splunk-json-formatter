@@ -1,7 +1,7 @@
 Splunk JSON Formatter
 =====================
 
-This is a Chrome user script I wrote to pretty print JSON objects located inside Splunk events.
+This is a user script that pretty prints JSON objects located inside Splunk events.
 
 Here's a demo of installing and running the script.  Installation and usage instructions below.
 
@@ -9,6 +9,13 @@ Here's a demo of installing and running the script.  Installation and usage inst
 
 Installation
 ------------
+
+For **Firefox**:
+
+ 1. Install [Greasemonkey](https://addons.mozilla.org/en-US/firefox/addon/greasemonkey/).
+ 2. Navigate directly to [the user script](https://github.com/mwcz/splunk-json-formatter/raw/master/splunk-json.user.js) and Firefox should say "This is a Greasemonkey script.  Click install to start using it."
+
+For **Chrome**:
 
  1. Clone this repo, or just download [the user
     script](https://github.com/mwcz/splunk-json-formatter/raw/master/splunk-json.user.js)
