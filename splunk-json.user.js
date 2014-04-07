@@ -70,47 +70,59 @@
             });
         }
 
-        function draw_buttons (event) {
-            var items = jQ('ol.EventsViewerSoftWrap .chunk .item');
-
-			items.each(function (index, el_tmp) {
-				var el = jQ(el_tmp).find('td.col4').first(),
-					container,
-					format_button = jQ('<button>');
-				format_button.text('Format JSON');
-				format_button.addClass('json-splunk splIconicButton splButton-tertiary');
-				format_button.css('margin-top', '2px');
-				format_button.css('white-space', 'nowrap');
-				format_button.css('float', 'left');
-				format_button.css('position', 'relative');
-				format_button.css('left', '-35px');
-				format_button.on('click', handle_json_button_click);
-				container = el.parentsUntil('li').last().find('td.col3');
-				container.append(format_button);
-			});
+        function draw_buttons () {
+            var items = jQ('tr.shared-eventsviewer-list-body-row');
+            items.each(function (index, el_tmp) {
+                if (jQ(el_tmp).find('td._time button').length === 0) {
+                var el = jQ(el_tmp).find('td._time'),
+                    container,
+                    format_button = jQ('<button>');
+                format_button.text('Format JSON');
+                format_button.addClass('json-splunk splIconicButton splButton-tertiary');
+                //format_button.css('margin-top', '2px');
+                //format_button.css('white-space', 'nowrap');
+                //format_button.css('float', 'left');
+                //format_button.css('position', 'relative');
+                //format_button.css('left', '-35px');
+                format_button.on('click', handle_json_button_click);
+                el.append(format_button);
+                }
+            });
         }
 
         function handle_json_button_click (event) {
-            var string = jQ(event.target).parentsUntil('tbody').last().find('pre.event').text();
-            var json_string = string.slice(string.indexOf('{'));
+            var string = jQ(event.target).parentsUntil('tbody').last().find('div.raw-event').text();
+            var json_string = string.substring(string.indexOf('{'), 1 + string.lastIndexOf('}'));
             var json_obj = JSON.parse(json_string);
             var win = window.open();
 
-            // write the content to the new window
+            // wrap syntax highlighted JSON in pre tags
             var content = '<pre>' + syntaxHighlight(json_obj) + '</pre>';
+
+            // replace URL strings with actual hyperlinks
             content = content.replace( /"(https?:\/\/[^"]+)"/gi , '"<a target="_blank" href="$1">$1</a>"' );
+
+            // write the content to the new window
             win.document.write(content);
 
             // write the css to the new window
             var style = win.document.createElement('style');
-            style.type = "text/css";
-            style.innerText = css;
-            win.document.body.appendChild(style);
+            style.setAttribute('type', "text/css");
+            style.setAttribute('rel', 'stylesheet');
+            style.textContent = css;
+            win.document.head.appendChild(style);
+            console.log(win.document.head);
         }
 
-		window.Splunk.Module.EventsViewer.prototype.onResultsRendered = function () {
-			draw_buttons();
-		};
+        // Try to draw the buttons every 400ms.  Previously, this was done by
+        // creating a Splunk.Module.EventsViewer.prototype.onResultsRendered
+        // function, but Splunk.Module is no longer defined in Splunk 6.0.2,
+        // even though docs imply that it should be.  Not sure why the previous
+        // approach no longer works, but this hacky interval will do until we
+        // can figure out how to wire up the event again.
+        setInterval(function() {
+            draw_buttons();
+        }.bind(this), 400);
     }
 
     // ==UserScript==
