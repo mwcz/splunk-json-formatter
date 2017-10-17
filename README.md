@@ -1,6 +1,8 @@
 Splunk JSON Formatter
 =====================
 
+**UNMAINTAINED**: This probably doesn't work anymore!
+
 This is a user script that pretty prints JSON objects located inside Splunk events.
 
 Here's a demo of installing and running the script.  Installation and usage instructions below.
